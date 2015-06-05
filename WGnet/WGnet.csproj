@@ -48,9 +48,12 @@
     <Compile Include="Enums\LanguageField.cs" />
     <Compile Include="Enums\Region.cs" />
     <Compile Include="Enums\SearchType.cs" />
-    <Compile Include="Exceptions\FieldNotSpecifiedException.cs" />
-    <Compile Include="Exceptions\InvalidOrLimitException.cs" />
+    <Compile Include="Exceptions\WgFieldNotSpecifiedException.cs" />
+    <Compile Include="Exceptions\WgInvalidOrLimitException.cs" />
     <Compile Include="Exceptions\WgApiException.cs" />
+    <Compile Include="Exceptions\WgMethodDisabledException.cs" />
+    <Compile Include="Exceptions\WgNotFoundException.cs" />
+    <Compile Include="Exceptions\WgSourceNotAvailableException.cs" />
     <Compile Include="Model\Meta.cs" />
     <Compile Include="Model\Player.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

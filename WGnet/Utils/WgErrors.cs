@@ -28,9 +28,15 @@ namespace WGnet.Utils
             switch (code)
             {
                 case 402:
-                    throw new FieldNotSpecifiedException("Не заполнено обязательное поле " + response["field"], code);
+                    throw new WgFieldNotSpecifiedException("Не заполнено обязательное поле " + response["field"] + ".", code);
+                case 404:
+                    throw new WgNotFoundException(message, code, (string)response["field"], (string)response["value"]);
+                case 405:
+                    throw new WgMethodDisabledException("Указаный метод API отключён.", code);
                 case 407:
-                    throw new InvalidOrLimitException(message, code, (string)response["field"], (string)response["value"]);
+                    throw new WgInvalidOrLimitException(message, code, (string)response["field"], (string)response["value"]);
+                case 504:
+                    throw new WgSourceNotAvailableException("Источник данных не доступен.", code);
                 default:
                     throw new WgApiException(message);
             }
