@@ -47,6 +47,7 @@
     <Compile Include="Categories\AccountCategory.cs" />
     <Compile Include="Enums\LanguageField.cs" />
     <Compile Include="Enums\Region.cs" />
+    <Compile Include="Enums\RequestProtocol.cs" />
     <Compile Include="Enums\SearchType.cs" />
     <Compile Include="Exceptions\WgFieldNotSpecifiedException.cs" />
     <Compile Include="Exceptions\WgInvalidOrLimitException.cs" />
