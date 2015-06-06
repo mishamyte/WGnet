@@ -1,4 +1,6 @@
-﻿using Newtonsoft.Json;
+﻿using System;
+using System.Linq.Expressions;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using WGnet.Exceptions;
 
@@ -40,6 +42,56 @@ namespace WGnet.Utils
                 default:
                     throw new WgApiException(message);
             }
+        }
+
+        public static void ThrowIfNumberIsNegative(Expression<Func<long?>> expr)
+        {
+            var result = ThrowIfNumberIsNegative<Func<long?>>(expr);
+
+            string name = result.Item1;
+            long? value = result.Item2();
+
+            if (value.HasValue && value < 0) throw new ArgumentException("Отрицательное значение.", name);
+        }
+
+        public static void ThrowIfNumberIsNegative(Expression<Func<long>> expr)
+        {
+            var result = ThrowIfNumberIsNegative<Func<long>>(expr);
+
+            var name = result.Item1;
+            long value = result.Item2();
+
+            if (value < 0) throw new ArgumentException("Отрицательное значение.", name);
+        }
+
+        private static Tuple<string, T> ThrowIfNumberIsNegative<T>(Expression<T> expr)
+        {
+            if (expr == null)
+                throw new ArgumentNullException("expr");
+
+            string name = string.Empty;
+
+            // Если значение передается из вызывающего метода
+            var unary = expr.Body as UnaryExpression;
+            if (unary != null)
+            {
+                var member = unary.Operand as MemberExpression;
+                if (member != null)
+                {
+                    name = member.Member.Name;
+                }
+            }
+
+            // Если в метод передается значение напрямую
+            var body = expr.Body as MemberExpression;
+            if (body != null)
+            {
+                name = body.Member.Name;
+            }
+
+            T func = expr.Compile();
+
+            return new Tuple<string, T>(name, func);
         }
     }
 }

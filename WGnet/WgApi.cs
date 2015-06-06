@@ -9,25 +9,41 @@ using WGnet.Utils;
 namespace WGnet
 {
     //TODO: Create settings class, which will consist info like APIUrl, RequestProtocol etc.
+    /// <summary>
+    /// API для работы с WG. Выступает в качестве фабрики для различных категорий API
+    /// </summary>
     public class WgApi
     {
         private readonly string _applicationId;
         private readonly string _apiUrl;
         private readonly RequestProtocol _protocol;
 
-        public AccountCategory Account { get; private set; }
+        /// <summary>
+        /// API для работы с методами WoT
+        /// </summary>
+        public WoTCategory WoT { get; private set; }
 
+        /// <summary>
+        /// Инициализирует новый экземпляр класса <see cref="WgApi"/>.
+        /// <param name="applicationId">ID приложения, полученное у WG</param>
+        /// </summary>
         public WgApi(string applicationId) : this(applicationId, Region.RU)
         {
         }
 
+        /// <summary>
+        /// Инициализирует новый экземпляр класса <see cref="WgApi"/>.
+        /// <param name="applicationId">ID приложения, полученное у WG.</param>
+        /// <param name="region">Кластер, с которым будет идти работа.</param>
+        /// </summary>
         public WgApi(string applicationId, Region region)
         {
             _applicationId = applicationId;
             _apiUrl = GetEnumDescription(region);
             _protocol = RequestProtocol.HTTPS; //TODO: remove to settings class
-            Account = new AccountCategory(this);
+            WoT = new WoTCategory(this);
         }
+
         internal string Call(string methodName, IDictionary<string, string> parameters)
         {
             string url = GetApiUrl(methodName, parameters);
