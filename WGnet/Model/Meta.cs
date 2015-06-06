@@ -1,7 +1,7 @@
 ﻿namespace WGnet.Model
 {
     /// <summary>
-    /// Мета-данные, находящиеся в ответе от серверов WG
+    /// Мета-данные, получаемые от серверов WG
     /// </summary>
     public class Meta
     {

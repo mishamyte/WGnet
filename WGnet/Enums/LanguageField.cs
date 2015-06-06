@@ -1,5 +1,8 @@
 ﻿namespace WGnet.Enums
 {
+    /// <summary>
+    /// Язык локализации
+    /// </summary>
     public enum LanguageField
     {
         EN,

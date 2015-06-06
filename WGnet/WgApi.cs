@@ -8,7 +8,7 @@ using WGnet.Utils;
 
 namespace WGnet
 {
-    //TODO: Create settings class, which will consist info like APIUrl, RequestProtocol etc.
+    //TODO: Create settings class, which will contain info like APIUrl, RequestProtocol etc.
     /// <summary>
     /// API для работы с WG. Выступает в качестве фабрики для различных категорий API
     /// </summary>
@@ -33,8 +33,8 @@ namespace WGnet
 
         /// <summary>
         /// Инициализирует новый экземпляр класса <see cref="WgApi"/>.
-        /// <param name="applicationId">ID приложения, полученное у WG.</param>
-        /// <param name="region">Кластер, с которым будет идти работа.</param>
+        /// <param name="applicationId">ID приложения, полученное у WG</param>
+        /// <param name="region">Кластер, с которым будет идти работа</param>
         /// </summary>
         public WgApi(string applicationId, Region region)
         {

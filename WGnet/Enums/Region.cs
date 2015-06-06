@@ -2,6 +2,9 @@
 
 namespace WGnet.Enums
 {
+    /// <summary>
+    /// Список адресов WG API кластеров 
+    /// </summary>
     public enum Region
     {
         [Description("api.worldoftanks.ru/wot/")]

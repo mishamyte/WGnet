@@ -3,11 +3,20 @@ using System.Runtime.Serialization;
 
 namespace WGnet.Exceptions
 {
+    /// <summary>
+    /// Выбрасывается при следующих ошибках:
+    /// - Превышен лимит переданных идентификаторов в поле ErrField
+    /// - Приложение заблокировано администрацией
+    /// - Указано не валидное значение параметра ErrField
+    /// - Неверный идентификатор приложения
+    /// - Недопустимый IP-адрес для серверного приложения
+    /// - Превышены лимиты квотирования
+    /// </summary>
     [Serializable]
     public class WgInvalidOrLimitException : WgApiException
     {
         /// <summary>
-        /// Код ошибки, полученный от сервера WG.
+        /// Код ошибки, полученный от сервера WG
         /// </summary>
         public int ErrorCode { get; private set; }
         /// <summary>
@@ -24,26 +33,26 @@ namespace WGnet.Exceptions
         public string ErrorMessage { get; private set; }
 
         /// <summary>
-        /// Инициализирует новый экземпляр класса <see cref="WgInvalidOrLimitException"/>.
+        /// Инициализирует новый экземпляр класса <see cref="WgInvalidOrLimitException"/>
         /// </summary>
         public WgInvalidOrLimitException()
         {            
         }
 
         /// <summary>
-        /// Инициализирует новый экземпляр класса <see cref="WgInvalidOrLimitException"/> с указанным описанием.
+        /// Инициализирует новый экземпляр класса <see cref="WgInvalidOrLimitException"/> с указанным описанием
         /// </summary>
-        /// <param name="message">Описание исключения.</param>
+        /// <param name="message">Описание исключения</param>
         public WgInvalidOrLimitException(string message) : base(message)
         {
         }
 
 
         /// <summary>
-        /// Инициализирует новый экземпляр класса <see cref="WgInvalidOrLimitException"/> с указанным описанием и кодом ошибки.
+        /// Инициализирует новый экземпляр класса <see cref="WgInvalidOrLimitException"/> с указанным описанием и кодом ошибки
         /// </summary>
-        /// <param name="message">Описание исключения.</param>
-        /// <param name="code">Код ошибки, полученный от сервера WG.</param>
+        /// <param name="message">Описание исключения</param>
+        /// <param name="code">Код ошибки, полученный от сервера WG</param>
         public WgInvalidOrLimitException(string message, int code)
             : base(message)
         {
@@ -51,11 +60,11 @@ namespace WGnet.Exceptions
         }
 
         /// <summary>
-        /// Инициализирует новый экземпляр класса <see cref="WgInvalidOrLimitException"/> с указанным описанием и кодом ошибки.
+        /// Инициализирует новый экземпляр класса <see cref="WgInvalidOrLimitException"/> с указанным описанием и кодом ошибки
         /// </summary>
-        /// <param name="message">Описание исключения.</param>
+        /// <param name="message">Описание исключения</param>
         /// <param name="field">Поле, в котором ошибка</param>
-        /// <param name="code">Код ошибки, полученный от сервера WG.</param>
+        /// <param name="code">Код ошибки, полученный от сервера WG</param>
         public WgInvalidOrLimitException(string message, int code, string field) : base(message)
         {
             ErrorCode = code;
@@ -64,12 +73,12 @@ namespace WGnet.Exceptions
         }
 
         /// <summary>
-        /// Инициализирует новый экземпляр класса <see cref="WgInvalidOrLimitException"/> с указанным описанием и кодом ошибки.
+        /// Инициализирует новый экземпляр класса <see cref="WgInvalidOrLimitException"/> с указанным описанием и кодом ошибки
         /// </summary>
-        /// <param name="message">Описание исключения.</param>
+        /// <param name="message">Описание исключения</param>
         /// <param name="field">Поле, в котором ошибка</param>
         /// <param name="value">Ошибочное значение</param>
-        /// <param name="code">Код ошибки, полученный от сервера WG.</param>
+        /// <param name="code">Код ошибки, полученный от сервера WG</param>
         public WgInvalidOrLimitException(string message,  int code, string field, string value) : base(message)
         {
             ErrorCode = code;
@@ -80,20 +89,20 @@ namespace WGnet.Exceptions
 
 
         /// <summary>
-        /// Инициализирует новый экземпляр класса <see cref="WgInvalidOrLimitException"/> с указанным описанием.
+        /// Инициализирует новый экземпляр класса <see cref="WgInvalidOrLimitException"/> с указанным описанием
         /// </summary>
-        /// <param name="message">Описание исключения.</param>
-        /// <param name="innerException">Внутреннее исключение.</param>
+        /// <param name="message">Описание исключения</param>
+        /// <param name="innerException">Внутреннее исключение</param>
         public WgInvalidOrLimitException(string message, Exception innerException) : base(message, innerException)
         {            
         }
 
         /// <summary>
-        /// Инициализирует новый экземпляр класса <see cref="WgInvalidOrLimitException"/> с указанным описанием, кодом ошибки и внутренним исключением.
+        /// Инициализирует новый экземпляр класса <see cref="WgInvalidOrLimitException"/> с указанным описанием, кодом ошибки и внутренним исключением
         /// </summary>
-        /// <param name="message">Описание исключения.</param>
-        /// <param name="code">Код ошибки, полученный от сервера WG.</param>
-        /// <param name="innerException">Внутреннее исключение.</param>
+        /// <param name="message">Описание исключения</param>
+        /// <param name="code">Код ошибки, полученный от сервера WG</param>
+        /// <param name="innerException">Внутреннее исключение</param>
         public WgInvalidOrLimitException(string message, int code, Exception innerException) : base(message, innerException)
         {
             ErrorCode = code;
@@ -101,12 +110,12 @@ namespace WGnet.Exceptions
 
 
         /// <summary>
-        /// Инициализирует новый экземпляр класса <see cref="WgInvalidOrLimitException"/> с указанным описанием, кодом ошибки, полем, в котором ошибка и внутренним исключением.
+        /// Инициализирует новый экземпляр класса <see cref="WgInvalidOrLimitException"/> с указанным описанием, кодом ошибки, полем, в котором ошибка и внутренним исключением
         /// </summary>
-        /// <param name="message">Описание исключения.</param>
-        /// <param name="code">Код ошибки, полученный от сервера WG.</param>
+        /// <param name="message">Описание исключения</param>
+        /// <param name="code">Код ошибки, полученный от сервера WG</param>
         /// <param name="field">Поле, в котором ошибка</param>
-        /// <param name="innerException">Внутреннее исключение.</param>
+        /// <param name="innerException">Внутреннее исключение</param>
         public WgInvalidOrLimitException(string message, int code, string field, Exception innerException) : base(message, innerException)
         {
             ErrorCode = code;
@@ -115,13 +124,13 @@ namespace WGnet.Exceptions
         }
 
         /// <summary>
-        /// Инициализирует новый экземпляр класса <see cref="WgInvalidOrLimitException"/> с указанным описанием, кодом ошибки,полем, в котором ошибка, значением ошибки и внутренним исключением.
+        /// Инициализирует новый экземпляр класса <see cref="WgInvalidOrLimitException"/> с указанным описанием, кодом ошибки,полем, в котором ошибка, значением ошибки и внутренним исключением
         /// </summary>
-        /// <param name="message">Описание исключения.</param>
-        /// <param name="code">Код ошибки, полученный от сервера WG.</param>
+        /// <param name="message">Описание исключения</param>
+        /// <param name="code">Код ошибки, полученный от сервера WG</param>
         /// <param name="field">Поле, в котором ошибка</param>
         /// <param name="value">Ошибочное значение</param>
-        /// <param name="innerException">Внутреннее исключение.</param>
+        /// <param name="innerException">Внутреннее исключение</param>
         public WgInvalidOrLimitException(string message, int code, string field, string value, Exception innerException) : base(message, innerException)
         {
             ErrorCode = code;
@@ -131,11 +140,11 @@ namespace WGnet.Exceptions
         }
 
         /// <summary>
-        /// Инициализирует новый экземпляр класса <see cref="WgInvalidOrLimitException"/> на основе ранее сериализованных данных.
+        /// Инициализирует новый экземпляр класса <see cref="WgInvalidOrLimitException"/> на основе ранее сериализованных данных
         /// </summary>
-        /// <param name="info">Содержит все данные, необходимые для десериализации.</param>
+        /// <param name="info">Содержит все данные, необходимые для десериализации</param>
         /// <param name="context">Описывает источник и назначение данного сериализованного потока и предоставляет дополнительный, 
-        /// определяемый вызывающим, контекст.</param>
+        /// определяемый вызывающим, контекст</param>
         protected WgInvalidOrLimitException(SerializationInfo info, StreamingContext context) : base(info, context)
         {            
         }

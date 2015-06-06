@@ -78,8 +78,6 @@ namespace WGnet.Categories.WoT
             var obj = JsonConvert.DeserializeObject<WgResponse<Dictionary<int, PlayerInfo>>>(response);
 
             return obj.Data;
-        }
-
-        
+        }      
     }
 }
