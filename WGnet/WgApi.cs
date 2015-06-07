@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Text;
 using WGnet.Categories;
 using WGnet.Enums;
@@ -15,7 +16,7 @@ namespace WGnet
     public class WgApi
     {
         private readonly string _applicationId;
-        private readonly string _apiUrl;
+        private readonly string _apiDomain;
         private readonly RequestProtocol _protocol;
 
         /// <summary>
@@ -27,7 +28,8 @@ namespace WGnet
         /// Инициализирует новый экземпляр класса <see cref="WgApi"/>.
         /// <param name="applicationId">ID приложения, полученное у WG</param>
         /// </summary>
-        public WgApi(string applicationId) : this(applicationId, Region.RU)
+        public WgApi(string applicationId)
+            : this(applicationId, WgRegion.RU)
         {
         }
 
@@ -36,17 +38,17 @@ namespace WGnet
         /// <param name="applicationId">ID приложения, полученное у WG</param>
         /// <param name="region">Кластер, с которым будет идти работа</param>
         /// </summary>
-        public WgApi(string applicationId, Region region)
+        public WgApi(string applicationId, WgRegion region)
         {
             _applicationId = applicationId;
-            _apiUrl = GetEnumDescription(region);
+            _apiDomain = GetEnumDescription(region);
             _protocol = RequestProtocol.HTTPS; //TODO: remove to settings class
             WoT = new WoTCategory(this);
         }
 
-        internal string Call(string methodName, IDictionary<string, string> parameters)
+        internal string Call(string methodName, Enum section, IDictionary<string, string> parameters)
         {
-            string url = GetApiUrl(methodName, parameters);
+            string url = GetApiUrl(methodName, section, parameters);
             var request = new WgRequest(url);
             string answer = request.GetResponse();
 
@@ -54,16 +56,20 @@ namespace WGnet
             return answer;
         }
 
-        private string GetApiUrl(string methodName, IEnumerable<KeyValuePair<string, string>> values)
+        private string GetApiUrl(string methodName, Enum section, IEnumerable<KeyValuePair<string, string>> values)
         {
             var builder = new StringBuilder();
 
-            builder.AppendFormat("{0}://{1}{2}",Enum.GetName(typeof(RequestProtocol), _protocol).ToLower(), _apiUrl, methodName);
+            builder.AppendFormat("{0}://{1}{2}/{3}/{4}", Enum.GetName(typeof(RequestProtocol), _protocol).ToLower(), GetEnumDescription(section), _apiDomain, Enum.GetName(typeof(WgSection), section).ToLower(), methodName);
 
             builder.AppendFormat("?application_id={0}", _applicationId);
 
             foreach (var pair in values)
                 builder.AppendFormat("&{0}={1}", pair.Key, pair.Value);
+
+            #if DEBUG && !UNIT_TEST
+            Trace.WriteLine(builder.ToString());
+            #endif
 
             return builder.ToString();
         }

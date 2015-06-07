@@ -42,7 +42,7 @@ namespace WGnet.Categories.WoT
                                  {"type", Enum.GetName(typeof(SearchType), searchType).ToLower()}, 
                                  {"limit", limit}
                              };
-            var response = _wg.Call("account/list/", parameters);
+            var response = _wg.Call("account/list/", WgSection.WoT, parameters);
 
             var obj = JsonConvert.DeserializeObject<WgResponse<List<Player>>>(response);
 
@@ -73,7 +73,7 @@ namespace WGnet.Categories.WoT
                                  {"fields",fields},
                              };
 
-            var response = _wg.Call("account/info/", parameters);
+            var response = _wg.Call("account/info/", WgSection.WoT, parameters);
 
             var obj = JsonConvert.DeserializeObject<WgResponse<Dictionary<int, PlayerInfo>>>(response);
 
