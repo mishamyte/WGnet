@@ -53,23 +53,17 @@ namespace WGnet.Categories.WoT
         /// <summary>
         /// Метод возвращает информацию об игроке
         /// </summary>
-        /// <param name="accountId">Идентификатор(ы) аккаунта(ов) игрока(ов)</param>
+        /// <param name="accountId">Идентификатор аккаунта игрока</param>
         /// <param name="accessToken">Ключ доступа к персональным данным пользователя. Имеет срок действия. Для получения ключа доступа необходимо запросить аутентификацию</param>
         /// <param name="language">Язык локализации</param>
         /// <param name="fields">Поля ответа. Поля разделяются запятыми. Вложенные поля разделяются точками. Для исключения поля используется знак «-» перед названием поля. Если параметр не указан, возвращаются все поля</param>
         /// <returns>Словарь, ключ - id пользователя, значение - информация пользователя</returns>
-        public IDictionary<int, PlayerInfo> Info(List<long> accountId, string accessToken = null,
+        public IDictionary<long, PlayerInfo> Info(long accountId, string accessToken = null,
             LanguageField language = LanguageField.RU, string fields = null)
         {
-            var accountIdBuilder = new StringBuilder();
-            foreach (var l in accountId)
-            {
-                if (l.Equals(accountId.Last())) accountIdBuilder.Append(l);
-                else accountIdBuilder.AppendFormat("{0},", l);
-            }
             var parameters = new WgParameters
                              {
-                                 {"account_id", accountIdBuilder.ToString()},
+                                 {"account_id", accountId},
                                  {"access_token", accessToken},
                                  {"language", Enum.GetName(typeof (LanguageField), language).ToLower()},
                                  {"fields", fields},
@@ -77,44 +71,53 @@ namespace WGnet.Categories.WoT
 
             var response = _wg.Call("account/info/", WgSection.WoT, parameters);
 
-            var obj = JsonConvert.DeserializeObject<WgResponse<Dictionary<int, PlayerInfo>>>(response);
+            var obj = JsonConvert.DeserializeObject<WgResponse<Dictionary<long, PlayerInfo>>>(response);
 
             return obj.Data;
         }
 
+        /// <summary>
+        /// Метод возвращает информацию об игроке
+        /// </summary>
+        /// <param name="accountId">Идентификаторы аккаунтов игроков</param>
+        /// <param name="accessToken">Ключ доступа к персональным данным пользователя. Имеет срок действия. Для получения ключа доступа необходимо запросить аутентификацию</param>
+        /// <param name="language">Язык локализации</param>
+        /// <param name="fields">Поля ответа. Поля разделяются запятыми. Вложенные поля разделяются точками. Для исключения поля используется знак «-» перед названием поля. Если параметр не указан, возвращаются все поля</param>
+        /// <returns>Словарь, ключ - id пользователя, значение - информация пользователя</returns>
+        public IDictionary<long, PlayerInfo> Info(List<long> accountId, string accessToken = null,
+            LanguageField language = LanguageField.RU, string fields = null)
+        {
+            var parameters = new WgParameters
+                             {
+                                 {"account_id", accountId.ToWgParameter()},
+                                 {"access_token", accessToken},
+                                 {"language", Enum.GetName(typeof (LanguageField), language).ToLower()},
+                                 {"fields", fields},
+                             };
+
+            var response = _wg.Call("account/info/", WgSection.WoT, parameters);
+
+            var obj = JsonConvert.DeserializeObject<WgResponse<Dictionary<long, PlayerInfo>>>(response);
+
+            return obj.Data;
+        }
 
         /// <summary>
         /// Метод возвращает информацию о технике игрока
         /// </summary>
-        /// <param name="accountId">Идентификатор(ы) аккаунта(ов) игрока(ов)</param>
+        /// <param name="accountId">Идентификатор аккаунта игрока</param>
         /// <param name="tankId">Идентификатор(ы) техники игрока</param>
         /// <param name="accessToken">Ключ доступа к персональным данным пользователя. Имеет срок действия. Для получения ключа доступа необходимо запросить аутентификацию</param>
         /// <param name="language">Язык локализации</param>
         /// <param name="fields">Поля ответа. Поля разделяются запятыми. Вложенные поля разделяются точками. Для исключения поля используется знак «-» перед названием поля. Если параметр не указан, возвращаются все поля</param>
         /// <returns>Словарь, ключ - id пользователя, значение - список с информацией по танкам пользователя</returns>
-        public IDictionary<int, List<PlayerTanks>> Tanks(List<long> accountId, string accessToken = null, List<long> tankId = null, 
+        public IDictionary<long, List<PlayerTanks>> Tanks(long accountId, string accessToken = null, List<long> tankId = null,
             LanguageField language = LanguageField.RU, string fields = null)
         {
-            var tankIdBuilder = new StringBuilder();
-            if (tankId != null)
-            {
-                foreach (var l in tankId)
-                {
-                    if (l.Equals(accountId.Last())) tankIdBuilder.Append(l);
-                    else tankIdBuilder.AppendFormat("{0},", l);
-                }
-            }
-
-            var accountIdBuilder = new StringBuilder();
-            foreach (var l in accountId)
-            {
-                if (l.Equals(accountId.Last())) accountIdBuilder.Append(l);
-                else accountIdBuilder.AppendFormat("{0},", l);
-            }
             var parameters = new WgParameters
                              {
-                                 {"account_id", accountIdBuilder.ToString()},
-                                 {"tank_id", tankIdBuilder.ToString()},
+                                 {"account_id", accountId},
+                                 {"tank_id", tankId.ToWgParameter()},
                                  {"access_token", accessToken},
                                  {"language", Enum.GetName(typeof (LanguageField), language).ToLower()},
                                  {"fields", fields},
@@ -122,9 +125,86 @@ namespace WGnet.Categories.WoT
 
             var response = _wg.Call("account/tanks/", WgSection.WoT, parameters);
 
-            var obj = JsonConvert.DeserializeObject<WgResponse<Dictionary<int, List<PlayerTanks>>>>(response);
+            var obj = JsonConvert.DeserializeObject<WgResponse<Dictionary<long, List<PlayerTanks>>>>(response);
 
             return obj.Data;
         }
-}
+
+        /// <summary>
+        /// Метод возвращает информацию о технике игрока
+        /// </summary>
+        /// <param name="accountId">Идентификаторы аккаунтов игроков</param>
+        /// <param name="tankId">Идентификатор(ы) техники игрока</param>
+        /// <param name="accessToken">Ключ доступа к персональным данным пользователя. Имеет срок действия. Для получения ключа доступа необходимо запросить аутентификацию</param>
+        /// <param name="language">Язык локализации</param>
+        /// <param name="fields">Поля ответа. Поля разделяются запятыми. Вложенные поля разделяются точками. Для исключения поля используется знак «-» перед названием поля. Если параметр не указан, возвращаются все поля</param>
+        /// <returns>Словарь, ключ - id пользователя, значение - список с информацией по танкам пользователя</returns>
+        public IDictionary<long, List<PlayerTanks>> Tanks(List<long> accountId, string accessToken = null, List<long> tankId = null,
+            LanguageField language = LanguageField.RU, string fields = null)
+        {
+            var parameters = new WgParameters
+                             {
+                                 {"account_id", accountId.ToWgParameter()},
+                                 {"tank_id", tankId.ToWgParameter()},
+                                 {"access_token", accessToken},
+                                 {"language", Enum.GetName(typeof (LanguageField), language).ToLower()},
+                                 {"fields", fields},
+                             };
+
+            var response = _wg.Call("account/tanks/", WgSection.WoT, parameters);
+
+            var obj = JsonConvert.DeserializeObject<WgResponse<Dictionary<long, List<PlayerTanks>>>>(response);
+
+            return obj.Data;
+        }
+
+
+        /// <summary>
+        /// Метод возвращает информацию о достижениях игроков
+        /// Значения поля achievements зависят от свойств достижений
+        /// См. <see cref="http://ru.wargaming.net/developers/api_reference/wot/encyclopedia/achievements/"/>
+        /// </summary>
+        /// <param name="accountId">Идентификатор аккаунта игрока</param>
+        /// <param name="language">Язык локализации</param>
+        /// <param name="fields">Поля ответа. Поля разделяются запятыми. Вложенные поля разделяются точками. Для исключения поля используется знак «-» перед названием поля. Если параметр не указан, возвращаются все поля</param>
+        /// <returns>Словарь, ключ - id пользователя, значение - достижения игрока</returns>
+        public IDictionary<long, PlayerAchievements> Achievements(long accountId, LanguageField language = LanguageField.RU, string fields = null)
+        {
+            var parameters = new WgParameters()
+                             {
+                                 {"account_id", accountId},
+                                 {"language", Enum.GetName(typeof (LanguageField), language).ToLower()},
+                                 {"fields", fields},
+                             };
+            var response = _wg.Call("account/achievements/", WgSection.WoT, parameters);
+
+            var obj = JsonConvert.DeserializeObject<WgResponse<Dictionary<long, PlayerAchievements>>>(response);
+
+            return obj.Data;
+        }
+
+        /// <summary>
+        /// Метод возвращает информацию о достижениях игроков
+        /// Значения поля achievements зависят от свойств достижений
+        /// См. <see cref="http://ru.wargaming.net/developers/api_reference/wot/encyclopedia/achievements/"/>
+        /// </summary>
+        /// <param name="accountId">Идентификаторы аккаунтов игрокаов</param>
+        /// <param name="language">Язык локализации</param>
+        /// <param name="fields">Поля ответа. Поля разделяются запятыми. Вложенные поля разделяются точками. Для исключения поля используется знак «-» перед названием поля. Если параметр не указан, возвращаются все поля</param>
+        /// <returns>Словарь, ключ - id пользователя, значение - достижения игрока</returns>
+        public IDictionary<long, PlayerAchievements> Achievements(List<long> accountId, LanguageField language = LanguageField.RU, string fields = null)
+        {
+            var parameters = new WgParameters()
+                             {
+                                 {"account_id", accountId.ToWgParameter()},
+                                 {"language", Enum.GetName(typeof (LanguageField), language).ToLower()},
+                                 {"fields", fields},
+                             };
+            var response = _wg.Call("account/achievements/", WgSection.WoT, parameters);
+
+            var obj = JsonConvert.DeserializeObject<WgResponse<Dictionary<long, PlayerAchievements>>>(response);
+
+            return obj.Data;
+        }
+    }
 }

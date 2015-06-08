@@ -74,6 +74,6 @@ namespace WGnet.Model.WoT
         /// См. <see cref="PlayerStatistics"/>
         /// </summary>
         [JsonProperty("statistics")]
-        public PlayerStatistics PlayerStatistics { get; set; }
+        public PlayerStatistics Statistics { get; set; }
     }
 }
