@@ -64,10 +64,10 @@ namespace WGnet.Model.WoT
 
         /// <summary>
         /// Приватные данные игрока
-        /// См. <see cref="WoT.Private"/>
+        /// См. <see cref="PlayerPrivate"/>
         /// </summary>
         [JsonProperty("private")]
-        public Private Private { get; set; }
+        public PlayerPrivate Private { get; set; }
 
         /// <summary>
         /// Статистика игрока

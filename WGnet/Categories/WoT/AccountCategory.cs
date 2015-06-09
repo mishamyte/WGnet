@@ -62,7 +62,7 @@ namespace WGnet.Categories.WoT
         /// <param name="accessToken">Ключ доступа к персональным данным пользователя. Имеет срок действия. Для получения ключа доступа необходимо запросить аутентификацию</param>
         /// <param name="language">Язык локализации</param>
         /// <param name="fields">Поля ответа. Поля разделяются запятыми. Вложенные поля разделяются точками. Для исключения поля используется знак «-» перед названием поля. Если параметр не указан, возвращаются все поля</param>
-        /// <returns>Словарь, ключ - id пользователя, значение - информация пользователя</returns>
+        /// <returns>Словарь, ключ - id пользователя, значение - информация о пользователе</returns>
         public ReadOnlyDictionary<long, PlayerInfo> Info(long accountId, string accessToken = null,
             LanguageField? language = null, string fields = null)
         {
@@ -85,13 +85,13 @@ namespace WGnet.Categories.WoT
         }
 
         /// <summary>
-        /// Метод возвращает информацию об игроке
+        /// Метод возвращает информацию об игроках
         /// </summary>
         /// <param name="accountId">Идентификаторы аккаунтов игроков</param>
         /// <param name="accessToken">Ключ доступа к персональным данным пользователя. Имеет срок действия. Для получения ключа доступа необходимо запросить аутентификацию</param>
         /// <param name="language">Язык локализации</param>
         /// <param name="fields">Поля ответа. Поля разделяются запятыми. Вложенные поля разделяются точками. Для исключения поля используется знак «-» перед названием поля. Если параметр не указан, возвращаются все поля</param>
-        /// <returns>Словарь, ключ - id пользователя, значение - информация пользователя</returns>
+        /// <returns>Словарь, ключ - id пользователя, значение - информация о пользователе</returns>
         public ReadOnlyDictionary<long, PlayerInfo> Info(List<long> accountId, string accessToken = null,
             LanguageField? language = null, string fields = null)
         {

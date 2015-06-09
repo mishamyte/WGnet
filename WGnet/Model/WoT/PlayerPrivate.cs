@@ -6,7 +6,7 @@ namespace WGnet.Model.WoT
     /// <summary>
     /// Приватные данные игрока
     /// </summary>
-    public class Private
+    public class PlayerPrivate
     {
         /// <summary>
         /// Информация о блокировке аккаунта
