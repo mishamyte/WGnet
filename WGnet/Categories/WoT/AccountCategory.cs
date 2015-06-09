@@ -29,19 +29,25 @@ namespace WGnet.Categories.WoT
         /// <param name="searchType">Тип поиска. Определяет минимальную длину строки поиска и вид поиска. По умолчанию используется значение startswith</param>
         /// <param name="limit">Количество возвращаемых записей (может вернуться меньше записей, но не больше 100). Если переданный лимит превышает 100, тогда автоматически выставляется лимит в None (по умолчанию)</param>
         /// <returns>Список найденных игроков</returns>
-        public ReadOnlyCollection<Player> List(string search, LanguageField language = LanguageField.RU, string fields = null,
-            SearchType searchType = SearchType.StartsWith, int limit = 100)
+        public ReadOnlyCollection<Player> List(string search, LanguageField? language = null, string fields = null,
+            SearchType? searchType = null, int? limit = null)
         {
             WgErrors.ThrowIfNumberIsNegative(() => limit);
 
             var parameters = new WgParameters
                              {
                                  {"search", search},
-                                 {"language", Enum.GetName(typeof (LanguageField), language).ToLower()},
                                  {"fields", fields},
-                                 {"type", Enum.GetName(typeof (SearchType), searchType).ToLower()},
                                  {"limit", limit}
                              };
+
+            if (language != null)
+                parameters.Add("language",Enum.GetName(typeof (LanguageField), language).ToLower());
+
+            if(searchType != null)
+                parameters.Add("type", Enum.GetName(typeof(SearchType), searchType).ToLower());
+
+
             var response = _wg.Call("account/list/", WgSection.WoT, parameters);
 
             var obj = JsonConvert.DeserializeObject<WgResponse<List<Player>>>(response);
@@ -58,15 +64,18 @@ namespace WGnet.Categories.WoT
         /// <param name="fields">Поля ответа. Поля разделяются запятыми. Вложенные поля разделяются точками. Для исключения поля используется знак «-» перед названием поля. Если параметр не указан, возвращаются все поля</param>
         /// <returns>Словарь, ключ - id пользователя, значение - информация пользователя</returns>
         public ReadOnlyDictionary<long, PlayerInfo> Info(long accountId, string accessToken = null,
-            LanguageField language = LanguageField.RU, string fields = null)
+            LanguageField? language = null, string fields = null)
         {
             var parameters = new WgParameters
                              {
                                  {"account_id", accountId},
                                  {"access_token", accessToken},
-                                 {"language", Enum.GetName(typeof (LanguageField), language).ToLower()},
                                  {"fields", fields},
                              };
+
+            if (language != null)
+                parameters.Add("language", Enum.GetName(typeof(LanguageField), language).ToLower());
+
 
             var response = _wg.Call("account/info/", WgSection.WoT, parameters);
 
@@ -84,15 +93,18 @@ namespace WGnet.Categories.WoT
         /// <param name="fields">Поля ответа. Поля разделяются запятыми. Вложенные поля разделяются точками. Для исключения поля используется знак «-» перед названием поля. Если параметр не указан, возвращаются все поля</param>
         /// <returns>Словарь, ключ - id пользователя, значение - информация пользователя</returns>
         public ReadOnlyDictionary<long, PlayerInfo> Info(List<long> accountId, string accessToken = null,
-            LanguageField language = LanguageField.RU, string fields = null)
+            LanguageField? language = null, string fields = null)
         {
             var parameters = new WgParameters
                              {
                                  {"account_id", accountId.ToWgParameter()},
                                  {"access_token", accessToken},
-                                 {"language", Enum.GetName(typeof (LanguageField), language).ToLower()},
                                  {"fields", fields},
                              };
+
+            if (language != null)
+                parameters.Add("language", Enum.GetName(typeof(LanguageField), language).ToLower());
+
 
             var response = _wg.Call("account/info/", WgSection.WoT, parameters);
 
@@ -111,16 +123,20 @@ namespace WGnet.Categories.WoT
         /// <param name="fields">Поля ответа. Поля разделяются запятыми. Вложенные поля разделяются точками. Для исключения поля используется знак «-» перед названием поля. Если параметр не указан, возвращаются все поля</param>
         /// <returns>Словарь, ключ - id пользователя, значение - список с информацией по танкам пользователя</returns>
         public ReadOnlyDictionary<long, List<PlayerTanks>> Tanks(long accountId, string accessToken = null, List<long> tankId = null,
-            LanguageField language = LanguageField.RU, string fields = null)
+            LanguageField? language = null, string fields = null)
         {
             var parameters = new WgParameters
                              {
                                  {"account_id", accountId},
                                  {"tank_id", tankId.ToWgParameter()},
                                  {"access_token", accessToken},
-                                 {"language", Enum.GetName(typeof (LanguageField), language).ToLower()},
                                  {"fields", fields},
                              };
+
+
+            if (language != null)
+                parameters.Add("language", Enum.GetName(typeof(LanguageField), language).ToLower());
+
 
             var response = _wg.Call("account/tanks/", WgSection.WoT, parameters);
 
@@ -139,16 +155,19 @@ namespace WGnet.Categories.WoT
         /// <param name="fields">Поля ответа. Поля разделяются запятыми. Вложенные поля разделяются точками. Для исключения поля используется знак «-» перед названием поля. Если параметр не указан, возвращаются все поля</param>
         /// <returns>Словарь, ключ - id пользователя, значение - список с информацией по танкам пользователя</returns>
         public ReadOnlyDictionary<long, List<PlayerTanks>> Tanks(List<long> accountId, string accessToken = null, List<long> tankId = null,
-            LanguageField language = LanguageField.RU, string fields = null)
+            LanguageField? language = null, string fields = null)
         {
             var parameters = new WgParameters
                              {
                                  {"account_id", accountId.ToWgParameter()},
                                  {"tank_id", tankId.ToWgParameter()},
                                  {"access_token", accessToken},
-                                 {"language", Enum.GetName(typeof (LanguageField), language).ToLower()},
                                  {"fields", fields},
                              };
+
+            if (language != null)
+                parameters.Add("language", Enum.GetName(typeof(LanguageField), language).ToLower());
+
 
             var response = _wg.Call("account/tanks/", WgSection.WoT, parameters);
 
@@ -167,14 +186,18 @@ namespace WGnet.Categories.WoT
         /// <param name="language">Язык локализации</param>
         /// <param name="fields">Поля ответа. Поля разделяются запятыми. Вложенные поля разделяются точками. Для исключения поля используется знак «-» перед названием поля. Если параметр не указан, возвращаются все поля</param>
         /// <returns>Словарь, ключ - id пользователя, значение - достижения игрока</returns>
-        public ReadOnlyDictionary<long, PlayerAchievements> Achievements(long accountId, LanguageField language = LanguageField.RU, string fields = null)
+        public ReadOnlyDictionary<long, PlayerAchievements> Achievements(long accountId, LanguageField? language = null, string fields = null)
         {
             var parameters = new WgParameters()
                              {
                                  {"account_id", accountId},
-                                 {"language", Enum.GetName(typeof (LanguageField), language).ToLower()},
                                  {"fields", fields},
                              };
+
+            if (language != null)
+                parameters.Add("language", Enum.GetName(typeof(LanguageField), language).ToLower());
+
+
             var response = _wg.Call("account/achievements/", WgSection.WoT, parameters);
 
             var obj = JsonConvert.DeserializeObject<WgResponse<Dictionary<long, PlayerAchievements>>>(response);
@@ -191,14 +214,18 @@ namespace WGnet.Categories.WoT
         /// <param name="language">Язык локализации</param>
         /// <param name="fields">Поля ответа. Поля разделяются запятыми. Вложенные поля разделяются точками. Для исключения поля используется знак «-» перед названием поля. Если параметр не указан, возвращаются все поля</param>
         /// <returns>Словарь, ключ - id пользователя, значение - достижения игрока</returns>
-        public ReadOnlyDictionary<long, PlayerAchievements> Achievements(List<long> accountId, LanguageField language = LanguageField.RU, string fields = null)
+        public ReadOnlyDictionary<long, PlayerAchievements> Achievements(List<long> accountId, LanguageField? language = null, string fields = null)
         {
             var parameters = new WgParameters()
                              {
                                  {"account_id", accountId.ToWgParameter()},
-                                 {"language", Enum.GetName(typeof (LanguageField), language).ToLower()},
                                  {"fields", fields},
                              };
+
+            if (language != null)
+                parameters.Add("language", Enum.GetName(typeof(LanguageField), language).ToLower());
+
+
             var response = _wg.Call("account/achievements/", WgSection.WoT, parameters);
 
             var obj = JsonConvert.DeserializeObject<WgResponse<Dictionary<long, PlayerAchievements>>>(response);

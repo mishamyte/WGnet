@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Diagnostics;
 using System.Text;
 using WGnet.Categories;
@@ -25,6 +24,11 @@ namespace WGnet
         public WoTCategory WoT { get; private set; }
 
         /// <summary>
+        /// API для работы с методами сервисом Wargaming.NET
+        /// </summary>
+        public WGNCategory WGN { get; private set; }
+
+        /// <summary>
         /// Инициализирует новый экземпляр класса <see cref="WgApi"/>.
         /// <param name="applicationId">ID приложения, полученное у WG</param>
         /// </summary>
@@ -41,9 +45,10 @@ namespace WGnet
         public WgApi(string applicationId, WgRegion region)
         {
             _applicationId = applicationId;
-            _apiDomain = GetEnumDescription(region);
+            _apiDomain = region.GetEnumDescription();
             _protocol = RequestProtocol.HTTPS; //TODO: remove to settings class
             WoT = new WoTCategory(this);
+            WGN = new WGNCategory(this);
         }
 
         internal string Call(string methodName, Enum section, IDictionary<string, string> parameters)
@@ -60,7 +65,7 @@ namespace WGnet
         {
             var builder = new StringBuilder();
 
-            builder.AppendFormat("{0}://{1}{2}/{3}/{4}", Enum.GetName(typeof(RequestProtocol), _protocol).ToLower(), GetEnumDescription(section), _apiDomain, Enum.GetName(typeof(WgSection), section).ToLower(), methodName);
+            builder.AppendFormat("{0}://{1}{2}/{3}/{4}", Enum.GetName(typeof(RequestProtocol), _protocol).ToLower(), section.GetEnumDescription(), _apiDomain, Enum.GetName(typeof(WgSection), section).ToLower(), methodName);
 
             builder.AppendFormat("?application_id={0}", _applicationId);
 
@@ -72,18 +77,6 @@ namespace WGnet
             #endif
 
             return builder.ToString();
-        }
-
-        private static string GetEnumDescription(Enum value)
-        {
-            var fi = value.GetType().GetField(value.ToString());
-
-            var attributes =
-                (DescriptionAttribute[])fi.GetCustomAttributes(
-                typeof(DescriptionAttribute),
-                false);
-
-            return attributes.Length > 0 ? attributes[0].Description : value.ToString();
         }
     }
 }
