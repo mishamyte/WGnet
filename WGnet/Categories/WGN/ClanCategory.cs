@@ -112,5 +112,59 @@ namespace WGnet.Categories.WGN
 
             return new ReadOnlyDictionary<long, ClanInfo>(obj.Data);
         }
+
+        /// <summary>
+        /// Метод возвращает информацию об игроке и краткую информацию о клане, в котором он состоит
+        /// </summary>
+        /// <param name="accountId">Идентификатор игрока</param>
+        /// <param name="language">Язык локализации</param>
+        /// <param name="fields">Поля ответа. Поля разделяются запятыми. Вложенные поля разделяются точками. Для исключения поля используется знак «-» перед названием поля. Если параметр не указан, возвращаются все поля</param>
+        /// <returns>Словарь, ключ - id игрока, значение - информация о игроке в рамках клана</returns>
+        public ReadOnlyDictionary<long, ClanMembersInfo> MembersInfo(long accountId, LanguageField? language = null,
+            string fields = null)
+        {
+            var parameters = new WgParameters
+                             {
+                                 {"account_id", accountId},
+                                 {"fields", fields},
+                             };
+
+            if (language != null)
+                parameters.Add("language", Enum.GetName(typeof(LanguageField), language).ToLower());
+
+
+            var response = _wg.Call("clans/membersinfo/", WgSection.WGN, parameters);
+
+            var obj = JsonConvert.DeserializeObject<WgResponse<Dictionary<long, ClanMembersInfo>>>(response);
+
+            return new ReadOnlyDictionary<long, ClanMembersInfo>(obj.Data);
+        }
+
+        /// <summary>
+        /// Метод возвращает информацию об игроках и краткую информацию о кланах, в которых они состоят
+        /// </summary>
+        /// <param name="accountId">Идентификаторы игроков</param>
+        /// <param name="language">Язык локализации</param>
+        /// <param name="fields">Поля ответа. Поля разделяются запятыми. Вложенные поля разделяются точками. Для исключения поля используется знак «-» перед названием поля. Если параметр не указан, возвращаются все поля</param>
+        /// <returns>Словарь, ключ - id игрока, значение - информация о игроке в рамках клана</returns>
+        public ReadOnlyDictionary<long, ClanMembersInfo> MembersInfo(List<long> accountId, LanguageField? language = null,
+            string fields = null)
+        {
+            var parameters = new WgParameters
+                             {
+                                 {"account_id", accountId.ToWgParameter()},
+                                 {"fields", fields},
+                             };
+
+            if (language != null)
+                parameters.Add("language", Enum.GetName(typeof(LanguageField), language).ToLower());
+
+
+            var response = _wg.Call("clans/membersinfo/", WgSection.WGN, parameters);
+
+            var obj = JsonConvert.DeserializeObject<WgResponse<Dictionary<long, ClanMembersInfo>>>(response);
+
+            return new ReadOnlyDictionary<long, ClanMembersInfo>(obj.Data);
+        }
     }
 }
