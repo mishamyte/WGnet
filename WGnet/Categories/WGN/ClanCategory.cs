@@ -166,5 +166,30 @@ namespace WGnet.Categories.WGN
 
             return new ReadOnlyDictionary<long, ClanMembersInfo>(obj.Data);
         }
+
+        /// <summary>
+        /// Метод возвращает информацию о клановых сущностях
+        /// </summary>
+        /// <param name="language">Язык локализации</param>
+        /// <param name="fields">Поля ответа. Поля разделяются запятыми. Вложенные поля разделяются точками. Для исключения поля используется знак «-» перед названием поля. Если параметр не указан, возвращаются все поля</param>
+        /// <returns>Возможные должности игроков в клане</returns>
+        public ClanRoles Glossary(LanguageField? language = null, string fields = null)
+        {
+            var parameters = new WgParameters
+                             {
+                                 {"fields", fields},
+                             };
+
+            if (language != null)
+                parameters.Add("language", Enum.GetName(typeof(LanguageField), language).ToLower());
+
+
+            var response = _wg.Call("clans/glossary/", WgSection.WGN, parameters);
+
+            var obj = JsonConvert.DeserializeObject<WgResponse<ClanRoles>>(response);
+
+            return obj.Data;
+        }
+
     }
 }

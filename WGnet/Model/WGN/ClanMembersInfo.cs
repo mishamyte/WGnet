@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 
 namespace WGnet.Model.WGN
 {
     /// <summary>
     /// Информация о игроке в рамках клана, в котором он состоит
+    /// См. описание <see cref="http://ru.wargaming.net/developers/api_reference/wgn/clans/membersinfo/"/>
     /// </summary>
     public class ClanMembersInfo
     {

@@ -69,6 +69,7 @@
     <Compile Include="Model\WGN\ClanMembers.cs" />
     <Compile Include="Model\WGN\ClanMembersInfo.cs" />
     <Compile Include="Model\WGN\ClanPrivate.cs" />
+    <Compile Include="Model\WGN\ClanRoles.cs" />
     <Compile Include="Model\WoT\PlayerAchievements.cs" />
     <Compile Include="Model\WoT\PlayerPrivate.cs" />
     <Compile Include="Model\WoT\PlayerTanks.cs" />
