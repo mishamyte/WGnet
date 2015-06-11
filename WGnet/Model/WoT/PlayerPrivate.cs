@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using Newtonsoft.Json;
 
 namespace WGnet.Model.WoT
@@ -42,7 +43,7 @@ namespace WGnet.Model.WoT
         /// Идентификаторы аккаунтов друзей игрока
         /// </summary>
         [JsonProperty("friends")]
-        public List<long> Friends { get; set; } 
+        public ReadOnlyCollection<long> Friends { get; set; } 
 
         /// <summary>
         /// Золото

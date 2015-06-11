@@ -1,4 +1,5 @@
 ﻿using WGnet.Categories.WoT;
+using WGnet.Model.WoT;
 
 namespace WGnet.Categories
 {
@@ -12,10 +13,16 @@ namespace WGnet.Categories
         /// См. <see cref="AccountCategory"/>
         /// </summary>
         public AccountCategory Account { get; private set; }
+        /// <summary>
+        /// API для работы с Укрепрайонами
+        /// См. <see cref="StrongholdCategory"/>
+        /// </summary>
+        public StrongholdCategory Stronghold { get; private set; }
 
         internal WoTCategory(WgApi wg)
         {
             Account = new AccountCategory(wg);
+            Stronghold = new StrongholdCategory(wg);
         }
     }
 }
