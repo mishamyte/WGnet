@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Newtonsoft.Json;
 using WGnet.Enums;
-using WGnet.Model.WGN;
+using WGnet.Model.WGN.Clan;
 using WGnet.Utils;
 
 namespace WGnet.Categories.WGN

@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using Newtonsoft.Json;
 using WGnet.Enums;
-using WGnet.Model.WoT;
+using WGnet.Model.WoT.Stronghold;
 using WGnet.Utils;
 
 namespace WGnet.Categories.WoT
@@ -46,6 +47,30 @@ namespace WGnet.Categories.WoT
             var obj = JsonConvert.DeserializeObject<WgResponse<Dictionary<long, Stronghold>>>(response);
 
             return obj.Data.First().Value;
+        }
+
+        /// <summary>
+        /// Метод возвращает информацию из энциклопедии обо всех строениях Укрепрайона
+        /// </summary>
+        /// <param name="language">Язык локализации</param>
+        /// <param name="fields">Поля ответа. Поля разделяются запятыми. Вложенные поля разделяются точками. Для исключения поля используется знак «-» перед названием поля. Если параметр не указан, возвращаются все поля</param>
+        /// <returns>Словарь, ключ - id здания, значение - информация из энциклопедии о строении</returns>
+        public ReadOnlyDictionary<int, StrongholdBuildings> Buildings(LanguageField? language = null, string fields = null)
+        {
+            var parameters = new WgParameters
+                             {
+                                 {"fields", fields},
+                             };
+
+            if (language != null)
+                parameters.Add("language", Enum.GetName(typeof(LanguageField), language).ToLower());
+
+
+            var response = _wg.Call("stronghold/buildings/", WgSection.WoT, parameters);
+
+            var obj = JsonConvert.DeserializeObject<WgResponse<Dictionary<int, StrongholdBuildings>>>(response);
+
+            return new ReadOnlyDictionary<int, StrongholdBuildings>(obj.Data);
         }
     }
 }

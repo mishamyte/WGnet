@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Newtonsoft.Json;
 using WGnet.Enums;
-using WGnet.Model.WoT;
+using WGnet.Model.WoT.Account;
 using WGnet.Utils;
 
 namespace WGnet.Categories.WoT
