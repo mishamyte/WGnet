@@ -88,6 +88,9 @@
     <Compile Include="Model\WoT\Account\PlayerStatisticsTeam.cs" />
     <Compile Include="Model\WoT\Account\PlayerTanksStatistics.cs" />
     <Compile Include="Model\WoT\Stronghold\Stronghold.cs" />
+    <Compile Include="Model\WoT\Stronghold\StrongholdAccountStats.cs" />
+    <Compile Include="Model\WoT\Stronghold\StrongholdAccountStatsDefense.cs" />
+    <Compile Include="Model\WoT\Stronghold\StrongholdAccountStatsSkirmish.cs" />
     <Compile Include="Model\WoT\Stronghold\StrongholdBuildings.cs" />
     <Compile Include="Model\WoT\Stronghold\StrongholdBuildingsInfo.cs" />
     <Compile Include="Model\WoT\Stronghold\StrongholdBuildingsReserve.cs" />
