@@ -1,5 +1,4 @@
 ﻿using WGnet.Categories.WoT;
-using WGnet.Model.WoT;
 
 namespace WGnet.Categories
 {
@@ -19,10 +18,17 @@ namespace WGnet.Categories
         /// </summary>
         public StrongholdCategory Stronghold { get; private set; }
 
+        /// <summary>
+        /// API для работы с "Мировой войной"
+        /// См. <see cref="GlobalwarCategory"/>
+        /// </summary>
+        public GlobalwarCategory Globalwar { get; private set; }
+
         internal WoTCategory(WgApi wg)
         {
             Account = new AccountCategory(wg);
             Stronghold = new StrongholdCategory(wg);
+            Globalwar = new GlobalwarCategory(wg);
         }
     }
 }

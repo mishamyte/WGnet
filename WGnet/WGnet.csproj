@@ -50,6 +50,7 @@
     <Compile Include="Categories\WGN\ClanCategory.cs" />
     <Compile Include="Categories\WoTCategory.cs" />
     <Compile Include="Categories\WoT\AccountCategory.cs" />
+    <Compile Include="Categories\WoT\GlobalwarCategory.cs" />
     <Compile Include="Categories\WoT\StrongholdCategory.cs" />
     <Compile Include="Enums\LanguageField.cs" />
     <Compile Include="Enums\OrderBy.cs" />
@@ -87,6 +88,8 @@
     <Compile Include="Model\WoT\Account\PlayerStatisticsStrongholdSkirmish.cs" />
     <Compile Include="Model\WoT\Account\PlayerStatisticsTeam.cs" />
     <Compile Include="Model\WoT\Account\PlayerTanksStatistics.cs" />
+    <Compile Include="Model\WoT\Globalwar\GlobalwarClan.cs" />
+    <Compile Include="Model\WoT\Globalwar\GlobalwarClanProvince.cs" />
     <Compile Include="Model\WoT\Stronghold\Stronghold.cs" />
     <Compile Include="Model\WoT\Stronghold\StrongholdAccountStats.cs" />
     <Compile Include="Model\WoT\Stronghold\StrongholdAccountStatsDefense.cs" />
