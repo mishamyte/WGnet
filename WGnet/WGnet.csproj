@@ -90,6 +90,9 @@
     <Compile Include="Model\WoT\Account\PlayerTanksStatistics.cs" />
     <Compile Include="Model\WoT\Globalwar\GlobalwarClan.cs" />
     <Compile Include="Model\WoT\Globalwar\GlobalwarClanProvince.cs" />
+    <Compile Include="Model\WoT\Globalwar\GlobalwarMap.cs" />
+    <Compile Include="Model\WoT\Globalwar\SeasonInfo.cs" />
+    <Compile Include="Model\WoT\Globalwar\SeasonInfoSteps.cs" />
     <Compile Include="Model\WoT\Stronghold\Stronghold.cs" />
     <Compile Include="Model\WoT\Stronghold\StrongholdAccountStats.cs" />
     <Compile Include="Model\WoT\Stronghold\StrongholdAccountStatsDefense.cs" />

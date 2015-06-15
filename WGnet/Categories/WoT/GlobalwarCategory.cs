@@ -49,6 +49,29 @@ namespace WGnet.Categories.WoT
 
             return new ReadOnlyCollection<GlobalwarClan>(obj.Data);
         }
+
+        /// <summary>
+        /// Метод возвращает информацию обо всех картах на Глобальной карте. Для каждой карты доступна информация о последнем сезоне.
+        /// </summary>
+        /// <param name="language">Язык локализации</param>
+        /// <param name="fields">Поля ответа. Поля разделяются запятыми. Вложенные поля разделяются точками. Для исключения поля используется знак «-» перед названием поля. Если параметр не указан, возвращаются все поля</param>
+        /// <returns>Список информации о картах</returns>
+        public ReadOnlyCollection<GlobalwarMap> Maps(LanguageField? language = null, string fields = null)
+        {
+            var parameters = new WgParameters
+                             {
+                                 {"fields", fields},
+                             };
+
+            if (language != null)
+                parameters.Add("language", Enum.GetName(typeof(LanguageField), language).ToLower());
+
+            var response = _wg.Call("globalwar/maps/", WgSection.WoT, parameters);
+
+            var obj = JsonConvert.DeserializeObject<WgResponse<List<GlobalwarMap>>>(response);
+
+            return new ReadOnlyCollection<GlobalwarMap>(obj.Data);
+        }
            
     }
 }
