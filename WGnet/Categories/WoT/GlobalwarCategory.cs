@@ -29,7 +29,7 @@ namespace WGnet.Categories.WoT
         /// <param name="limit">Количество возвращаемых записей (может вернуться меньше записей, но не больше 100). Если переданный лимит превышает 100, тогда автоматически выставляется лимит в 100 (по умолчанию).</param>
         /// <param name="pageNo">Номер страницы результатов</param>
         /// <returns>Список информации про кланы в контексте "Мировой войны"</returns>
-        public ReadOnlyCollection<GlobalwarClan> Clans(string mapId, LanguageField? language = null,
+        public ReadOnlyCollection<GlobalwarClans> Clans(string mapId, LanguageField? language = null,
             string fields = null, int? limit = null, int? pageNo = null)
         {
             var parameters = new WgParameters
@@ -45,9 +45,9 @@ namespace WGnet.Categories.WoT
 
             var response = _wg.Call("globalwar/clans/", WgSection.WoT, parameters);
 
-            var obj = JsonConvert.DeserializeObject<WgResponse<List<GlobalwarClan>>>(response);
+            var obj = JsonConvert.DeserializeObject<WgResponse<List<GlobalwarClans>>>(response);
 
-            return new ReadOnlyCollection<GlobalwarClan>(obj.Data);
+            return new ReadOnlyCollection<GlobalwarClans>(obj.Data);
         }
 
         /// <summary>
@@ -56,7 +56,7 @@ namespace WGnet.Categories.WoT
         /// <param name="language">Язык локализации</param>
         /// <param name="fields">Поля ответа. Поля разделяются запятыми. Вложенные поля разделяются точками. Для исключения поля используется знак «-» перед названием поля. Если параметр не указан, возвращаются все поля</param>
         /// <returns>Список информации о картах</returns>
-        public ReadOnlyCollection<GlobalwarMap> Maps(LanguageField? language = null, string fields = null)
+        public ReadOnlyCollection<GlobalwarMaps> Maps(LanguageField? language = null, string fields = null)
         {
             var parameters = new WgParameters
                              {
@@ -68,9 +68,44 @@ namespace WGnet.Categories.WoT
 
             var response = _wg.Call("globalwar/maps/", WgSection.WoT, parameters);
 
-            var obj = JsonConvert.DeserializeObject<WgResponse<List<GlobalwarMap>>>(response);
+            var obj = JsonConvert.DeserializeObject<WgResponse<List<GlobalwarMaps>>>(response);
 
-            return new ReadOnlyCollection<GlobalwarMap>(obj.Data);
+            return new ReadOnlyCollection<GlobalwarMaps>(obj.Data);
+        }
+
+        /// <summary>
+        /// Метод возвращает список провинций на Глобальной карте
+        /// </summary>
+        /// <param name="mapId">Идентификатор Глобальной карты</param>
+        /// <param name="provinceId">Идентификатор провинции</param>
+        /// <param name="regionId">Идентификатор региона</param>
+        /// <param name="status">Идентификатор статуса мятежа в провинции</param>
+        /// <param name="language">Язык локализации</param>
+        /// <param name="fields">Поля ответа. Поля разделяются запятыми. Вложенные поля разделяются точками. Для исключения поля используется знак «-» перед названием поля. Если параметр не указан, возвращаются все поля</param>
+        /// <returns>Словарь - ключ - id провинции, значение - информация про провинцию</returns>
+        public ReadOnlyDictionary<string, GlobalWarProvinces> Provinces(string mapId, List<string> provinceId = null,
+            List<string> regionId = null, ProvinceStatus? status = null, LanguageField? language = null,
+            string fields = null)
+        {
+            var parameters = new WgParameters
+                             {
+                                 {"map_id", mapId},
+                                 {"province_id", provinceId.ToWgParameter()},
+                                 {"region_id", regionId.ToWgParameter()},
+                                 {"fields", fields},
+                             };
+
+            if (language != null)
+                parameters.Add("language", Enum.GetName(typeof(LanguageField), language).ToLower());
+
+            if (status != null)
+                parameters.Add("status", status.GetEnumDescription());
+
+            var response = _wg.Call("globalwar/provinces/", WgSection.WoT, parameters);
+
+            var obj = JsonConvert.DeserializeObject<WgResponse<Dictionary<string, GlobalWarProvinces>>>(response);
+
+            return new ReadOnlyDictionary<string, GlobalWarProvinces>(obj.Data);
         }
            
     }

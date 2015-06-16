@@ -6,7 +6,7 @@ namespace WGnet.Model.WoT.Globalwar
     /// <summary>
     /// Информация о клане, участвующем в "Мировой войне"
     /// </summary>
-    public class GlobalwarClan
+    public class GlobalwarClans
     {
         /// <summary>
         /// Идентификатор клана
@@ -18,6 +18,6 @@ namespace WGnet.Model.WoT.Globalwar
         /// Список провинций клана
         /// </summary>
         [JsonProperty("provinces")]
-        public ReadOnlyCollection<GlobalwarClanProvince> Provinces { get; set; } 
+        public ReadOnlyCollection<GlobalwarClansProvince> Provinces { get; set; } 
     }
 }

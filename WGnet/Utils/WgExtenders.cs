@@ -23,6 +23,21 @@ namespace WGnet.Utils
             return builder.ToString();
         }
 
+        internal static string ToWgParameter(this List<string> list)
+        {
+            var builder = new StringBuilder();
+            if (list != null)
+            {
+                foreach (var l in list)
+                {
+                    if (l.Equals(list.Last())) builder.Append(l);
+                    else builder.AppendFormat("{0},", l);
+                }
+
+            }
+            return builder.ToString();
+        }
+
         internal static string GetEnumDescription(this Enum value)
         {
             var fi = value.GetType().GetField(value.ToString());

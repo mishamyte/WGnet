@@ -6,7 +6,7 @@ namespace WGnet.Model.WoT.Globalwar
     /// Информация о карте на Глобальной карте
     /// См. описание <see cref="http://ru.wargaming.net/developers/api_reference/wot/globalwar/maps/"/>
     /// </summary>
-    public class GlobalwarMap
+    public class GlobalwarMaps
     {
         /// <summary>
         /// Идентификатор Глобальной карты

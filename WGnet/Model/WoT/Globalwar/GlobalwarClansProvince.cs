@@ -5,7 +5,7 @@ namespace WGnet.Model.WoT.Globalwar
     /// <summary>
     /// Информация о провинции клана
     /// </summary>
-    public class GlobalwarClanProvince
+    public class GlobalwarClansProvince
     {
         /// <summary>
         /// Время владения провинцией (в днях)

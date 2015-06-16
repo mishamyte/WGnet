@@ -54,6 +54,7 @@
     <Compile Include="Categories\WoT\StrongholdCategory.cs" />
     <Compile Include="Enums\LanguageField.cs" />
     <Compile Include="Enums\OrderBy.cs" />
+    <Compile Include="Enums\ProvinceStatus.cs" />
     <Compile Include="Enums\WgRegion.cs" />
     <Compile Include="Enums\RequestProtocol.cs" />
     <Compile Include="Enums\SearchType.cs" />
@@ -88,9 +89,11 @@
     <Compile Include="Model\WoT\Account\PlayerStatisticsStrongholdSkirmish.cs" />
     <Compile Include="Model\WoT\Account\PlayerStatisticsTeam.cs" />
     <Compile Include="Model\WoT\Account\PlayerTanksStatistics.cs" />
-    <Compile Include="Model\WoT\Globalwar\GlobalwarClan.cs" />
-    <Compile Include="Model\WoT\Globalwar\GlobalwarClanProvince.cs" />
-    <Compile Include="Model\WoT\Globalwar\GlobalwarMap.cs" />
+    <Compile Include="Model\WoT\Globalwar\GlobalwarClans.cs" />
+    <Compile Include="Model\WoT\Globalwar\GlobalwarClansProvince.cs" />
+    <Compile Include="Model\WoT\Globalwar\GlobalwarMaps.cs" />
+    <Compile Include="Model\WoT\Globalwar\GlobalWarProvinces.cs" />
+    <Compile Include="Model\WoT\Globalwar\GlobalWarProvincesRegions.cs" />
     <Compile Include="Model\WoT\Globalwar\SeasonInfo.cs" />
     <Compile Include="Model\WoT\Globalwar\SeasonInfoSteps.cs" />
     <Compile Include="Model\WoT\Stronghold\Stronghold.cs" />
