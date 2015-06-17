@@ -94,6 +94,9 @@
     <Compile Include="Model\WoT\Globalwar\GlobalwarMaps.cs" />
     <Compile Include="Model\WoT\Globalwar\GlobalWarProvinces.cs" />
     <Compile Include="Model\WoT\Globalwar\GlobalWarProvincesRegions.cs" />
+    <Compile Include="Model\WoT\Globalwar\GlobalwarTournaments.cs" />
+    <Compile Include="Model\WoT\Globalwar\GlobalwarTournamentTree.cs" />
+    <Compile Include="Model\WoT\Globalwar\GlobalwarTournamentTreeBattles.cs" />
     <Compile Include="Model\WoT\Globalwar\SeasonInfo.cs" />
     <Compile Include="Model\WoT\Globalwar\SeasonInfoSteps.cs" />
     <Compile Include="Model\WoT\Stronghold\Stronghold.cs" />
