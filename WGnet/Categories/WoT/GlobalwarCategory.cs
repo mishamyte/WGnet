@@ -107,6 +107,63 @@ namespace WGnet.Categories.WoT
 
             return new ReadOnlyDictionary<string, GlobalWarProvinces>(obj.Data);
         }
-           
+
+        /// <summary>
+        /// Метод возвращает список турниров на выбранной Глобальной карте
+        /// </summary>
+        /// <param name="mapId">Идентификатор Глобальной карты</param>
+        /// <param name="provinceId">Идентификатор провинции</param>
+        /// <param name="language">Язык локализации</param>
+        /// <param name="fields">Поля ответа. Поля разделяются запятыми. Вложенные поля разделяются точками. Для исключения поля используется знак «-» перед названием поля. Если параметр не указан, возвращаются все поля</param>
+        /// <returns>Список турниров на Глобальной карте</returns>
+        public ReadOnlyCollection<GlobalwarTournaments> Tournaments(string mapId, string provinceId,
+            LanguageField? language = null, string fields = null)
+        {
+            var parameters = new WgParameters
+                             {
+                                 {"map_id", mapId},
+                                 {"province_id", provinceId},
+                                 {"fields", fields},
+                             };
+
+            if (language != null)
+                parameters.Add("language", Enum.GetName(typeof(LanguageField), language).ToLower());
+
+            var response = _wg.Call("globalwar/tournaments/", WgSection.WoT, parameters);
+
+            var obj = JsonConvert.DeserializeObject<WgResponse<List<GlobalwarTournaments>>>(response);
+
+            return new ReadOnlyCollection<GlobalwarTournaments>(obj.Data);
+
+        }
+
+        /// <summary>
+        /// Метод возвращает список турниров на выбранной Глобальной карте
+        /// </summary>
+        /// <param name="mapId">Идентификатор Глобальной карты</param>
+        /// <param name="provinceId">Список идентификаторов провинций. Можно передавать до 10 провинций.</param>
+        /// <param name="language">Язык локализации</param>
+        /// <param name="fields">Поля ответа. Поля разделяются запятыми. Вложенные поля разделяются точками. Для исключения поля используется знак «-» перед названием поля. Если параметр не указан, возвращаются все поля</param>
+        /// <returns>Список турниров на Глобальной карте</returns>
+        public ReadOnlyCollection<GlobalwarTournaments> Tournaments(string mapId, List<string> provinceId,
+            LanguageField? language = null, string fields = null)
+        {
+            var parameters = new WgParameters
+                             {
+                                 {"map_id", mapId},
+                                 {"province_id", provinceId.ToWgParameter()},
+                                 {"fields", fields},
+                             };
+
+            if (language != null)
+                parameters.Add("language", Enum.GetName(typeof(LanguageField), language).ToLower());
+
+            var response = _wg.Call("globalwar/tournaments/", WgSection.WoT, parameters);
+
+            var obj = JsonConvert.DeserializeObject<WgResponse<List<GlobalwarTournaments>>>(response);
+
+            return new ReadOnlyCollection<GlobalwarTournaments>(obj.Data);
+
+        }
     }
 }
