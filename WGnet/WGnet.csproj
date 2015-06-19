@@ -89,9 +89,13 @@
     <Compile Include="Model\WoT\Account\PlayerStatisticsStrongholdSkirmish.cs" />
     <Compile Include="Model\WoT\Account\PlayerStatisticsTeam.cs" />
     <Compile Include="Model\WoT\Account\PlayerTanksStatistics.cs" />
+    <Compile Include="Model\WoT\Globalwar\GlobalwarBattlesArenas.cs" />
+    <Compile Include="Model\WoT\Globalwar\GlobalwarBattles.cs" />
+    <Compile Include="Model\WoT\Globalwar\GlobalwarBattlesProvinces.cs" />
     <Compile Include="Model\WoT\Globalwar\GlobalwarClans.cs" />
     <Compile Include="Model\WoT\Globalwar\GlobalwarClansProvince.cs" />
     <Compile Include="Model\WoT\Globalwar\GlobalwarMaps.cs" />
+    <Compile Include="Model\WoT\Globalwar\GlobalwarBattlesPrivate.cs" />
     <Compile Include="Model\WoT\Globalwar\GlobalWarProvinces.cs" />
     <Compile Include="Model\WoT\Globalwar\GlobalWarProvincesRegions.cs" />
     <Compile Include="Model\WoT\Globalwar\GlobalwarTournaments.cs" />

@@ -165,5 +165,65 @@ namespace WGnet.Categories.WoT
             return new ReadOnlyCollection<GlobalwarTournaments>(obj.Data);
 
         }
+
+        /// <summary>
+        /// Метод возвращает список боёв клана
+        /// </summary>
+        /// <param name="clanId">Идентификатор клана</param>
+        /// <param name="mapId">Идентификатор Глобальной карты</param>
+        /// <param name="accessToken">Ключ доступа к персональным данным пользователя. Имеет срок действия. Для получения ключа доступа необходимо запросить аутентификацию.</param>
+        /// <param name="language">Язык локализации</param>
+        /// <param name="fields">Поля ответа. Поля разделяются запятыми. Вложенные поля разделяются точками. Для исключения поля используется знак «-» перед названием поля. Если параметр не указан, возвращаются все поля</param>
+        /// <returns>Словарь, ключ - id клана, значение - список боев клана</returns>
+        public ReadOnlyDictionary<long, ReadOnlyCollection<GlobalwarBattles>> Battles(long clanId, string mapId, string accessToken = null,
+            LanguageField? language = null, string fields = null)
+        {
+            var parameters = new WgParameters
+                             {
+                                 {"clan_id", clanId},
+                                 {"map_id", mapId},
+                                 {"access_token", accessToken},
+                                 {"fields", fields},
+                             };
+
+            if (language != null)
+                parameters.Add("language", Enum.GetName(typeof(LanguageField), language).ToLower());
+
+            var response = _wg.Call("globalwar/battles/", WgSection.WoT, parameters);
+
+            var obj = JsonConvert.DeserializeObject<WgResponse<Dictionary<long, ReadOnlyCollection<GlobalwarBattles>>>>(response);
+
+            return new ReadOnlyDictionary<long, ReadOnlyCollection<GlobalwarBattles>>(obj.Data);
+        }
+
+        /// <summary>
+        /// Метод возвращает список боёв кланов
+        /// </summary>
+        /// <param name="clanId">Идентификаторы кланов</param>
+        /// <param name="mapId">Идентификатор Глобальной карты</param>
+        /// <param name="accessToken">Ключ доступа к персональным данным пользователя. Имеет срок действия. Для получения ключа доступа необходимо запросить аутентификацию.</param>
+        /// <param name="language">Язык локализации</param>
+        /// <param name="fields">Поля ответа. Поля разделяются запятыми. Вложенные поля разделяются точками. Для исключения поля используется знак «-» перед названием поля. Если параметр не указан, возвращаются все поля</param>
+        /// <returns>Словарь, ключ - id клана, значение - список боев кланов</returns>
+        public ReadOnlyDictionary<long, ReadOnlyCollection<GlobalwarBattles>> Battles(List<long> clanId, string mapId, string accessToken = null,
+            LanguageField? language = null, string fields = null)
+        {
+            var parameters = new WgParameters
+                             {
+                                 {"clan_id", clanId.ToWgParameter()},
+                                 {"map_id", mapId},
+                                 {"access_token", accessToken},
+                                 {"fields", fields},
+                             };
+
+            if (language != null)
+                parameters.Add("language", Enum.GetName(typeof(LanguageField), language).ToLower());
+
+            var response = _wg.Call("globalwar/battles/", WgSection.WoT, parameters);
+
+            var obj = JsonConvert.DeserializeObject<WgResponse<Dictionary<long, ReadOnlyCollection<GlobalwarBattles>>>>(response);
+
+            return new ReadOnlyDictionary<long, ReadOnlyCollection<GlobalwarBattles>>(obj.Data);
+        }
     }
 }

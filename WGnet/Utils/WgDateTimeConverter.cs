@@ -14,8 +14,29 @@ namespace WGnet.Utils
         /// <returns>Значение в формате DateTime</returns>
         public static DateTime DateFromTimestamp(this long timestamp)
         {
-            var unixStartDate = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
-            return unixStartDate.AddSeconds(timestamp);
+            return new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc).AddSeconds(timestamp);
+        }
+
+        /// <summary>
+        /// Конвертирует nullable Unix Timestamp в nullable DateTime
+        /// </summary>
+        /// <param name="timestamp">Nullable Unix Timestamp</param>
+        /// <returns>Значение в формате nullable DateTime</returns>
+        public static DateTime? DateFromTimestamp(this long? timestamp)
+        {
+            return timestamp == null
+                ? (DateTime?) null
+                : new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc).AddSeconds((double) timestamp);
+        }
+
+        /// <summary>
+        /// Конвертирует nullable DateTime в nullable Unix Timestamp 
+        /// </summary>
+        /// <param name="date">Nullable DateTime</param>
+        /// <returns>Значение в nullable Unix Timestamp</returns>
+        public static long? DateToTimestamp(this DateTime? date)
+        {
+            return date == null ? (long?) null : Convert.ToInt64((date - new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc)).Value.TotalSeconds);
         }
 
         /// <summary>
@@ -23,10 +44,9 @@ namespace WGnet.Utils
         /// </summary>
         /// <param name="date">DateTime</param>
         /// <returns>Значение в Unix Timestamp</returns>
-        public static long DateToTimesptamp(this DateTime date)
+        public static long DateToTimestamp(this DateTime date)
         {
-            var unixStartDate = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
-            return Convert.ToInt64((date - unixStartDate).TotalSeconds);
+            return Convert.ToInt64((date - new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc)).TotalSeconds);
         }
     }
 }
